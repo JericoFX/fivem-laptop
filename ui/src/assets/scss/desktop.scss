@@ -1,0 +1,11 @@
+$desktop-margin: 100px;
+
+#desktop {
+    position: absolute;
+    left: calc(#{$desktop-margin} / 2);
+    top: calc(#{$desktop-margin} / 2);
+    background: $desktop-margin;
+    width: calc(100% - #{$desktop-margin});
+    height: calc(100% - #{$desktop-margin});
+    border: 1px solid black;
+}
