@@ -3,8 +3,8 @@
         <h1>Locked, please enter your password</h1>
         <form action="" @submit.prevent="login" v-if="!loading">
             <label for="password">Password</label>
-            <input type="text" v-model="password" id="password" />
-            <div v-if="passwordError">
+            <input type="password" v-model="password" id="password" />
+            <div v-if="passwordError" style="margin-top: 20px;">
                 {{ passwordError }}
             </div>
         </form>
@@ -30,25 +30,37 @@ export default {
       this.loading = true;
       this.passwordError = '';
 
-      // Implement LUA for actual password verification
-      this.$http.post('login')
-        .then(() => {
-          this.isLoggedIn = true;
-        })
-
-      // Emulate login for now
-      if(this.password === '1234') {
-        this.passwordError = 'Valid password, logging you in'
-        setTimeout(() => {
-          this.$emit('login');
-        }, 1000)
+      if(this.password.length < 3)
+      {
+        this.failPassword("Password too short")
       } else {
-        this.passwordError = "Invalid password"
 
-        setTimeout(() => {
-          this.loading = false
-        }, 2000)
+        // Implement LUA for actual password verification
+        this.$http.post('login', JSON.stringify({
+          password: this.password
+        }));
+
+        // Emulate login for now
+        if(this.password === '1234') {
+          this.passwordError = 'Valid password, logging you in'
+
+          setTimeout(() => {
+            this.$emit('login');
+          }, 1000)
+        } else {
+          this.failPassword("Invalid password")
+        }
       }
+
+    },
+
+    failPassword(reason) {
+      this.passwordError = reason
+      this.password = '';
+
+      setTimeout(() => {
+        this.loading = false
+      }, 2000)
     }
   }
 

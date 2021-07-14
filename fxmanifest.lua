@@ -7,8 +7,7 @@ version '1.0.0'
 
 -- What to run
 client_scripts {
-    'client.lua',
-    'client_two.lua'
+    'lua/client/laptop.lua',
 }
 
 server_script 'server.lua'

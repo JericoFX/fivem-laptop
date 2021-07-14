@@ -1,11 +1,73 @@
 $desktop-margin: 100px;
 
+$background-image: 'https://www.lucidcityrp.com/background.jpg';
+$alt-background-image: 'https://content.invisioncic.com/k307787/monthly_2021_06/f0c4823817d161fbd26a91b39cbe390b.jpg.43d1c584bb0076e8e9360ad7a624fd53.jpg';
+
 #desktop {
     position: absolute;
     left: calc(#{$desktop-margin} / 2);
     top: calc(#{$desktop-margin} / 2);
-    background: $desktop-margin;
     width: calc(100% - #{$desktop-margin});
     height: calc(100% - #{$desktop-margin});
     border: 1px solid black;
+    background: url('#{$background-image}') bottom;
+
+}
+
+#taskbar-container {
+    width: 100%;
+    height: 62px;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    z-index: 0;
+    overflow: hidden;
+
+    > div {
+        height: 100%;
+        filter: blur(5px);
+        background: url('#{$background-image}') bottom;
+    }
+}
+
+//#taskbar-background {
+//
+//    width: 100%;
+//    height: 50px;
+//    filter: blur(2px);
+//    position: absolute;
+//    left: 0;
+//    bottom: 0;
+//    z-index: 0;
+//    background: url('#{$background-image}') bottom;
+//    overflow: hidden;
+//}
+
+#taskbar {
+    background: rgba(255, 255, 255, 0.3);
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+
+    ul {
+        display: flex;
+        margin: 0;
+        z-index: 10;
+
+        li {
+            padding: 5px;
+            display: flex;
+
+            img {
+                max-height: 100%;
+                height: 52px;
+            }
+        }
+    }
+}
+
+img {
+    max-height: 100%;
 }

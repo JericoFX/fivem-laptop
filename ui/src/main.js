@@ -6,10 +6,12 @@ import axios from 'axios'
 import VueAxios from "vue-axios";
 
 const http = axios.create({
-  baseURL: process.env.BASE_MODULE_URL,
+
+  baseURL: process.env.VUE_APP_BASE_MODULE_URL,
   headers: {
     'Content-type': 'application/json; charset=UTF-8',
   },
+
 })
 createApp(App)
   .use(store)

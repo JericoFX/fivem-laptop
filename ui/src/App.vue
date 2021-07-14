@@ -20,10 +20,29 @@ export default {
       isLoggedIn: false,
     }
   },
-  methods: {
+  created() {
+    window.addEventListener('message', (event) => {
 
+      const item = event.data;
+
+      if (item.type === "ui") {
+        if (item.status)
+          this.isLoggedIn = item.status;
+      }
+    });
+
+    document.onkeyup = (data) => {
+      if (data.keyCode === 27) {
+        this.logout()
+      }
+    }
+  },
+  methods: {
     login() {
       this.isLoggedIn = true;
+    },
+    logout() {
+      this.isLoggedIn = false;
     }
   }
 }
