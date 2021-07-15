@@ -1,5 +1,7 @@
 <template>
     <div class="h-100 d-flex justify-center align-center flex-column">
+    <div class="bg-white" style="padding: 50px">
+    
         <h1>Locked, please enter your password</h1>
         <form action="" @submit.prevent="login" v-if="!loading">
             <label for="password">Password</label>
@@ -12,6 +14,7 @@
         <div v-if="loading">
             Checking password ...
         </div>
+      </div>
     </div>
 </template>
 
@@ -25,6 +28,16 @@ export default {
       loading: false,
     }
   },
+  mounted() {
+    window.addEventListener('message', (event) => {
+
+      const item = event.data;
+
+      if (item.e === "login-error") {
+        this.failPassword(item.error)
+      }
+    });
+  },
   methods: {
     login() {
       this.loading = true;
@@ -36,20 +49,13 @@ export default {
       } else {
 
         // Implement LUA for actual password verification
-        this.$http.post('login', JSON.stringify({
+        this.$http.post('/login', JSON.stringify({
           password: this.password
         }));
 
-        // Emulate login for now
-        if(this.password === '1234') {
-          this.passwordError = 'Valid password, logging you in'
-
-          setTimeout(() => {
-            this.$emit('login');
-          }, 1000)
-        } else {
-          this.failPassword("Invalid password")
-        }
+        setTimeout(() => {
+          this.loading = false;
+        }, 1500)
       }
 
     },

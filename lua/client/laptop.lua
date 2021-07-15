@@ -1,17 +1,33 @@
 local laptopOpen = false
+local isLoggedIn = false
 
 RegisterCommand('laptop', function(source)
-    setDisplay(true)
+    chat("Opening", {255, 0, 0})
+    setDisplay(not laptopOpen)
+    chat("Opened", {255, 0, 0})
 end)
 
 RegisterNUICallback('login', function(data)
     if (data.password == '1234')
     then
+        isLoggedIn = true
         SendNUIMessage({
-            type="ui",
-            status=laptopOpen
+            e="login",
+            status=isLoggedIn
+        })
+    else
+        SendNUIMessage({
+            e="login-error",
+            error="Invalid Password"
         })
     end
+end)
+
+RegisterNUICallback('logout', function(data)
+    isLoggedIn = false
+    laptopOpen = false
+
+    setDisplay(false);
 end)
 
 -- Disable controls while in the laptop
@@ -33,7 +49,18 @@ function setDisplay(bool)
     SetNuiFocus(bool, bool)
 
     SendNUIMessage({
-        type = "ui",
+        e = "open-laptop",
         open = bool
     })
+end
+
+function chat(str, color)
+    TriggerEvent(
+        'chat:addMessage',
+        {
+            color = color,
+            multiline = true,
+            args = {str}
+        }
+    )
 end

@@ -13,7 +13,9 @@
     "vue": "^3.0.0",
     "vue-axios": "^3.2.4",
     "vue-router": "^4.0.0-0",
-    "vuex": "^4.0.0-0"
+    "vuex": "^4.0.0-0",
+    
+    "ifdef-loader": "^2.1.2"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",
@@ -27,7 +29,8 @@
     "eslint-plugin-vue": "^7.0.0",
     "lint-staged": "^9.5.0",
     "sass": "^1.26.5",
-    "sass-loader": "^8.0.2"
+    "sass-loader": "^8.0.2",
+    "html-webpack-inline-source-plugin": "0.0.10"
   },
   "gitHooks": {
     "pre-commit": "lint-staged"

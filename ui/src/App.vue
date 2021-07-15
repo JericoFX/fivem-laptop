@@ -1,5 +1,5 @@
 <template>
-    <div class="h-100">
+    <div class="h-100" v-if="isOpen">
         <LockScreen v-if="!isLoggedIn" @login="login"/>
         <Desktop v-else id="desktop"/>
     </div>
@@ -18,20 +18,25 @@ export default {
   data() {
     return {
       isLoggedIn: false,
+      isOpen: false,
     }
   },
-  created() {
+  mounted() {
     window.addEventListener('message', (event) => {
 
       const item = event.data;
 
-      if (item.type === "ui") {
-        if (item.status)
-          this.isLoggedIn = item.status;
+      if (item.e === "open-laptop") {
+        this.isOpen = item.open;
+      } else if(item.e === 'login') {
+        this.login();
+      } else if(item.e === 'logout') {
+        this.logout();
       }
     });
 
     document.onkeyup = (data) => {
+      console.log(data);
       if (data.keyCode === 27) {
         this.logout()
       }
@@ -43,6 +48,9 @@ export default {
     },
     logout() {
       this.isLoggedIn = false;
+      this.isOpen = false;
+
+      this.$http.post('/logout')
     }
   }
 }

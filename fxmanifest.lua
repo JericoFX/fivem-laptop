@@ -10,10 +10,8 @@ client_scripts {
     'lua/client/laptop.lua',
 }
 
-server_script 'server.lua'
-
-ui_page 'ui/public/index.html'
+ui_page 'ui/dist/index.html'
 
 files {
-    'ui/public/index.html'
+    'ui/dist/index.html'
 }
